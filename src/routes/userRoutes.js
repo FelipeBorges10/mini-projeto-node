@@ -10,3 +10,8 @@ router.put("/:id", userController.update);
 router.delete("/:id", userController.remove);
 
 export default router;
+
+import {authMiddleware } from"../middlewares/authMiddlewares.js";
+
+router.get("/", authMiddleware,
+    userController.getAll);
