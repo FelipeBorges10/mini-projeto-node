@@ -19,3 +19,7 @@ app.get("/", (req, res) => {
 app.listen(3000, () => {
     console.log("Servidor rodando na porta 3000");
 });
+
+import authRoutes from "./routes/authRoutes.js";
+
+app.use ("auth", authRoutes);
