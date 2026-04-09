@@ -1,10 +1,10 @@
 import express from "express";
 import * as userController from "../controllers/userController.js";
-import { authMiddleare } from "../middlewares/authMiddlewares.js";
+import { authMiddleware } from "../middlewares/authMiddlewares.js";
 
 const router = express.Router();
 
-router.get("/",authMiddleare, userController.getAll);
+router.get("/",authMiddleware, userController.getAll);
 
 router.get("/:id", userController.getById);
 router.post("/", userController.create);
