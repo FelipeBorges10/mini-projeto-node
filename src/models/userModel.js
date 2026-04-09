@@ -3,7 +3,7 @@ let users = [];
 export const getUsers = () => users;
 
 export const getUserById = (id) => {
-    return users.find(u => u.id === id);
+    return users.find(u => u.id === Number (id));
 };
 
 export const createUser = (user) => {
@@ -11,7 +11,7 @@ export const createUser = (user) => {
 };
 
 export const updateUser = (id, data) => {
-    const index = users.findIndex(u => u.id === id);
+    const index = users.findIndex(u => u.id === Number(id));
     if (index !== -1) {
         users[index] =
 { ...users[index], ...data };
@@ -19,7 +19,7 @@ export const updateUser = (id, data) => {
 };
 
 export const deleteUser = (id) => {
-    users = users.filter(u => u.id !== id);
+    users = users.filter(u => u.id !== Number(id));
 };
 
 export const findByEmail = (email) => {
