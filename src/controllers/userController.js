@@ -1,4 +1,5 @@
 import * as userModel from "../models/userModel.js";
+import bcrypt from "bcrypt";
 
 export const getAll = (req, res) => {
     res.json(userModel.getUsers());
@@ -10,23 +11,31 @@ export const getById = (req, res) => {
     res.json(user);
 };
 
-export const create = (req, res) => {
+export const create = async (req, res) => {
     const { name, email, password, role } = req.body;
 
     if (!name || !email || !password) {
-        return res.status(400).json({ error : "Dados incompletos" });
-}
+        return res.status(400).json({ error : "Dados incompletos" }); 
+    }
 
-const newUser = {
-    id: Date.now(),
-    name,
-    email,
-    password,
-    role: role || "user"
-};
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-userModel.createUser(newUser);
-res.status(201).json(newUser);
+    const newUser = {
+        id: Date.now(),
+        name,
+        email,
+        password: hashedPassword,
+        role: role || "user"
+    };
+
+    userModel.createUser(newUser);
+
+    res.status(201).json({
+        id: newUser.id,
+        name,
+        email,
+        role: newUser.role
+    });
 };
 
 export const update = (req, res) => {
